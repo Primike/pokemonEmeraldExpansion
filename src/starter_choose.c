@@ -352,6 +352,7 @@ static const struct SpriteTemplate sSpriteTemplate_StarterCircle =
     .callback = SpriteCB_StarterPokemon
 };
 
+//  Primike
 // .text
 u16 GetStarterPokemon(u16 chosenStarterId)
 {

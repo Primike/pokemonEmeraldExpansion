@@ -60,8 +60,9 @@
 // Special PP recovery amounts for ITEM4_HEAL_PP
 #define ITEM6_HEAL_PP_FULL   0x7F
 
+// Primike
 // Amount of EV modified by ITEM4_EV_HP, ITEM4_EV_ATK, ITEM5_EV_DEF, ITEM5_EV_SPEED, ITEM5_EV_SPDEF and ITEM5_EV_SPATK
-#define ITEM6_ADD_EV       10
+#define ITEM6_ADD_EV       51
 #define ITEM6_SUBTRACT_EV -10
 
 // Used for GetItemEffectType.

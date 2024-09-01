@@ -3201,6 +3201,153 @@ void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFix
     CalculateMonStats(mon);
 }
 
+// void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
+// {
+//     u8 speciesName[POKEMON_NAME_LENGTH + 1];
+//     u32 personality;
+//     u32 value;
+//     u16 checksum;
+//     u8 i;
+//     u8 availableIVs[NUM_STATS];
+//     u8 selectedIvs[LEGENDARY_PERFECT_IV_COUNT];
+
+//     ZeroBoxMonData(boxMon);
+
+//     if (hasFixedPersonality)
+//         personality = fixedPersonality;
+//     else
+//         personality = Random32();
+
+//     SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
+
+//     // Determine original trainer ID
+//     if (otIdType == OT_ID_RANDOM_NO_SHINY)
+//     {
+//         u32 shinyValue;
+//         do
+//         {
+//             // Choose random OT IDs until one that results in a non-shiny Pokémon
+//             value = Random32();
+//             shinyValue = GET_SHINY_VALUE(value, personality);
+//         } while (shinyValue < SHINY_ODDS);
+//     }
+//     else if (otIdType == OT_ID_PRESET)
+//     {
+//         value = fixedOtId;
+//     }
+//     else // Player is the OT
+//     {
+//         value = gSaveBlock2Ptr->playerTrainerId[0]
+//               | (gSaveBlock2Ptr->playerTrainerId[1] << 8)
+//               | (gSaveBlock2Ptr->playerTrainerId[2] << 16)
+//               | (gSaveBlock2Ptr->playerTrainerId[3] << 24);
+//     }
+
+//     SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
+
+//     checksum = CalculateBoxMonChecksum(boxMon);
+//     SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &checksum);
+//     EncryptBoxMon(boxMon);
+//     GetSpeciesName(speciesName, species);
+//     SetBoxMonData(boxMon, MON_DATA_NICKNAME, speciesName);
+//     SetBoxMonData(boxMon, MON_DATA_LANGUAGE, &gGameLanguage);
+//     SetBoxMonData(boxMon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
+//     SetBoxMonData(boxMon, MON_DATA_SPECIES, &species);
+//     SetBoxMonData(boxMon, MON_DATA_EXP, &gExperienceTables[gBaseStats[species].growthRate][level]);
+//     SetBoxMonData(boxMon, MON_DATA_FRIENDSHIP, &gBaseStats[species].friendship);
+//     value = GetCurrentRegionMapSectionId();
+//     SetBoxMonData(boxMon, MON_DATA_MET_LOCATION, &value);
+//     SetBoxMonData(boxMon, MON_DATA_MET_LEVEL, &level);
+//     SetBoxMonData(boxMon, MON_DATA_MET_GAME, &gGameVersion);
+//     value = ITEM_POKE_BALL;
+//     SetBoxMonData(boxMon, MON_DATA_POKEBALL, &value);
+//     SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
+
+//     if (fixedIV < USE_RANDOM_IVS)
+//     {
+//         SetBoxMonData(boxMon, MON_DATA_HP_IV, &fixedIV);
+//         SetBoxMonData(boxMon, MON_DATA_ATK_IV, &fixedIV);
+//         SetBoxMonData(boxMon, MON_DATA_DEF_IV, &fixedIV);
+//         SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &fixedIV);
+//         SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &fixedIV);
+//         SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &fixedIV);
+//     }
+//     else
+//     {
+//         u32 iv;
+//         value = Random();
+
+//         iv = value & MAX_IV_MASK;
+//         SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
+//         iv = (value & (MAX_IV_MASK << 5)) >> 5;
+//         SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
+//         iv = (value & (MAX_IV_MASK << 10)) >> 10;
+//         SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
+
+//         value = Random();
+
+//         iv = value & MAX_IV_MASK;
+//         SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
+//         iv = (value & (MAX_IV_MASK << 5)) >> 5;
+//         SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
+//         iv = (value & (MAX_IV_MASK << 10)) >> 10;
+//         SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
+
+//         #if P_LEGENDARY_PERFECT_IVS >= GEN_6
+//             if (gBaseStats[species].flags & (FLAG_LEGENDARY | FLAG_MYTHICAL | FLAG_ULTRA_BEAST))
+//             {
+//                 iv = MAX_PER_STAT_IVS;
+//                 // Initialize a list of IV indices.
+//                 for (i = 0; i < NUM_STATS; i++)
+//                 {
+//                     availableIVs[i] = i;
+//                 }
+
+//                 // Select the 3 IVs that will be perfected.
+//                 for (i = 0; i < LEGENDARY_PERFECT_IV_COUNT; i++)
+//                 {
+//                     u8 index = Random() % (NUM_STATS - i);
+//                     selectedIvs[i] = availableIVs[index];
+//                     RemoveIVIndexFromList(availableIVs, index);
+//                 }
+//                 for (i = 0; i < LEGENDARY_PERFECT_IV_COUNT; i++)
+//                 {
+//                     switch (selectedIvs[i])
+//                     {
+//                         case STAT_HP:
+//                             SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
+//                             break;
+//                         case STAT_ATK:
+//                             SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
+//                             break;
+//                         case STAT_DEF:
+//                             SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
+//                             break;
+//                         case STAT_SPEED:
+//                             SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
+//                             break;
+//                         case STAT_SPATK:
+//                             SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
+//                             break;
+//                         case STAT_SPDEF:
+//                             SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
+//                             break;
+//                     }
+//                 }
+//             }
+//         #endif
+        
+//     }
+
+//     if (gBaseStats[species].abilities[1])
+//     {
+//         value = personality & 1;
+//         SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
+//     }
+
+//     GiveBoxMonInitialMoveset(boxMon);
+// }
+
 void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
@@ -3210,6 +3357,9 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u8 i;
     u8 availableIVs[NUM_STATS];
     u8 selectedIvs[LEGENDARY_PERFECT_IV_COUNT];
+    u32 iv; // Declare iv variable here
+    // Primike
+    u8 hardcodedLevel = 50; 
 
     ZeroBoxMonData(boxMon);
 
@@ -3263,81 +3413,17 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_POKEBALL, &value);
     SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
 
-    if (fixedIV < USE_RANDOM_IVS)
-    {
-        SetBoxMonData(boxMon, MON_DATA_HP_IV, &fixedIV);
-        SetBoxMonData(boxMon, MON_DATA_ATK_IV, &fixedIV);
-        SetBoxMonData(boxMon, MON_DATA_DEF_IV, &fixedIV);
-        SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &fixedIV);
-        SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &fixedIV);
-        SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &fixedIV);
-    }
-    else
-    {
-        u32 iv;
-        value = Random();
+    // Primike ivs
+    // Hardcoding IVs: 0 0 0 0 0 31 (31 for Special Defense)
+    iv = 0;
+    SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
+    SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
+    SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
+    SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
+    SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
 
-        iv = value & MAX_IV_MASK;
-        SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 5)) >> 5;
-        SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 10)) >> 10;
-        SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
-
-        value = Random();
-
-        iv = value & MAX_IV_MASK;
-        SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 5)) >> 5;
-        SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
-        iv = (value & (MAX_IV_MASK << 10)) >> 10;
-        SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
-
-        #if P_LEGENDARY_PERFECT_IVS >= GEN_6
-            if (gBaseStats[species].flags & (FLAG_LEGENDARY | FLAG_MYTHICAL | FLAG_ULTRA_BEAST))
-            {
-                iv = MAX_PER_STAT_IVS;
-                // Initialize a list of IV indices.
-                for (i = 0; i < NUM_STATS; i++)
-                {
-                    availableIVs[i] = i;
-                }
-
-                // Select the 3 IVs that will be perfected.
-                for (i = 0; i < LEGENDARY_PERFECT_IV_COUNT; i++)
-                {
-                    u8 index = Random() % (NUM_STATS - i);
-                    selectedIvs[i] = availableIVs[index];
-                    RemoveIVIndexFromList(availableIVs, index);
-                }
-                for (i = 0; i < LEGENDARY_PERFECT_IV_COUNT; i++)
-                {
-                    switch (selectedIvs[i])
-                    {
-                        case STAT_HP:
-                            SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
-                            break;
-                        case STAT_ATK:
-                            SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
-                            break;
-                        case STAT_DEF:
-                            SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
-                            break;
-                        case STAT_SPEED:
-                            SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
-                            break;
-                        case STAT_SPATK:
-                            SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
-                            break;
-                        case STAT_SPDEF:
-                            SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
-                            break;
-                    }
-                }
-            }
-        #endif
-        
-    }
+    iv = 31;
+    SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
 
     if (gBaseStats[species].abilities[1])
     {

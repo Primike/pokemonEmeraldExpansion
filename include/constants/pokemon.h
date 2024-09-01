@@ -44,6 +44,7 @@
 
 #define EGG_GROUPS_PER_MON      2
 
+// Primike
 // Pokemon natures
 #define NATURE_HARDY    0
 #define NATURE_LONELY   1
@@ -282,7 +283,8 @@
 #define USE_RANDOM_IVS (MAX_PER_STAT_IVS + 1)
 #define MAX_PER_STAT_EVS 255
 #define MAX_TOTAL_EVS 510
-#define EV_ITEM_RAISE_LIMIT 100
+// Primike
+#define EV_ITEM_RAISE_LIMIT 255
 
 // Battle move flags
 #define FLAG_MAKES_CONTACT          (1 << 0)
