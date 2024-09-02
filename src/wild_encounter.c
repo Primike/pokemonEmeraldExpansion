@@ -408,6 +408,7 @@ static void CreateWildMon(u16 species, u8 level)
         return;
     }
 
+    // Primike: Creates from here
     CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, PickWildMonNature());
 }
 
@@ -443,6 +444,7 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 ar
     if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
         return FALSE;
 
+    // Primike: this is the index of the possible encounters and level
     CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
     return TRUE;
 }

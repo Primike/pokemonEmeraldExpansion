@@ -3414,14 +3414,16 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
 
     // Primike ivs
-    // Hardcoding IVs: 0 0 0 0 0 31 (31 for Special Defense)
-    iv = 0;
+    iv = 31;
     SetBoxMonData(boxMon, MON_DATA_HP_IV, &iv);
+    iv = 31;
     SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
+    iv = 31;
     SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
+    iv = 30;
     SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
+    iv = 31;
     SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
-
     iv = 31;
     SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
 
@@ -3434,6 +3436,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     GiveBoxMonInitialMoveset(boxMon);
 }
 
+// Primike: Creator of wild
 void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)
 {
     u32 personality;
