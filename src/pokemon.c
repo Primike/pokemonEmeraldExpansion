@@ -3193,11 +3193,14 @@ void ZeroEnemyPartyMons(void)
 void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
     u32 mail;
+    bool32 isEventLegal = TRUE;
+    
     ZeroMonData(mon);
     CreateBoxMon(&mon->box, species, level, fixedIV, hasFixedPersonality, fixedPersonality, otIdType, fixedOtId);
     SetMonData(mon, MON_DATA_LEVEL, &level);
     mail = MAIL_NONE;
     SetMonData(mon, MON_DATA_MAIL, &mail);
+    SetMonData(mon, MON_DATA_EVENT_LEGAL, &isEventLegal);
     CalculateMonStats(mon);
 }
 
@@ -3420,12 +3423,12 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     SetBoxMonData(boxMon, MON_DATA_ATK_IV, &iv);
     iv = 31;
     SetBoxMonData(boxMon, MON_DATA_DEF_IV, &iv);
-    iv = 30;
-    SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
     iv = 31;
     SetBoxMonData(boxMon, MON_DATA_SPATK_IV, &iv);
     iv = 31;
     SetBoxMonData(boxMon, MON_DATA_SPDEF_IV, &iv);
+    iv = 30;
+    SetBoxMonData(boxMon, MON_DATA_SPEED_IV, &iv);
 
     if (gBaseStats[species].abilities[1])
     {
