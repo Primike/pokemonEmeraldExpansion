@@ -4845,7 +4845,6 @@ static const struct LevelUpMove sRaikouLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_BITE),
     LEVEL_UP_MOVE( 1, MOVE_LEER),
     LEVEL_UP_MOVE( 8, MOVE_THUNDER_SHOCK),
-    LEVEL_UP_MOVE(15, MOVE_ROAR),
     LEVEL_UP_MOVE(22, MOVE_QUICK_ATTACK),
     LEVEL_UP_MOVE(29, MOVE_SPARK),
     LEVEL_UP_MOVE(36, MOVE_REFLECT),
@@ -4867,7 +4866,6 @@ static const struct LevelUpMove sEnteiLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_BITE),
     LEVEL_UP_MOVE( 1, MOVE_LEER),
     LEVEL_UP_MOVE( 8, MOVE_EMBER),
-    LEVEL_UP_MOVE(15, MOVE_ROAR),
     LEVEL_UP_MOVE(22, MOVE_FIRE_SPIN),
     LEVEL_UP_MOVE(29, MOVE_STOMP),
     LEVEL_UP_MOVE(36, MOVE_FLAMETHROWER),
@@ -4965,7 +4963,6 @@ static const struct LevelUpMove sTyranitarLevelUpLearnset[] = {
 };
 
 static const struct LevelUpMove sLugiaLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_WHIRLWIND),
     LEVEL_UP_MOVE( 1, MOVE_WEATHER_BALL),
     LEVEL_UP_MOVE( 9, MOVE_GUST),
     //LEVEL_UP_MOVE(15, MOVE_DRAGON_RUSH),
@@ -4985,7 +4982,6 @@ static const struct LevelUpMove sLugiaLevelUpLearnset[] = {
 };
 
 static const struct LevelUpMove sHoOhLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_WHIRLWIND),
     LEVEL_UP_MOVE( 1, MOVE_WEATHER_BALL),
     LEVEL_UP_MOVE( 9, MOVE_GUST),
     //LEVEL_UP_MOVE(15, MOVE_BRAVE_BIRD),
@@ -7676,7 +7672,6 @@ static const struct LevelUpMove sMetagrossLevelUpLearnset[] = {
 };
 
 static const struct LevelUpMove sRegirockLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_EXPLOSION),
     LEVEL_UP_MOVE( 1, MOVE_STOMP),
     LEVEL_UP_MOVE( 1, MOVE_ROCK_THROW),
     //LEVEL_UP_MOVE( 1, MOVE_CHARGE_BEAM),
@@ -7697,7 +7692,6 @@ static const struct LevelUpMove sRegirockLevelUpLearnset[] = {
 };
 
 static const struct LevelUpMove sRegiceLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_EXPLOSION),
     LEVEL_UP_MOVE( 1, MOVE_STOMP),
     LEVEL_UP_MOVE( 1, MOVE_ICY_WIND),
     //LEVEL_UP_MOVE( 1, MOVE_CHARGE_BEAM),
@@ -7718,7 +7712,6 @@ static const struct LevelUpMove sRegiceLevelUpLearnset[] = {
 };
 
 static const struct LevelUpMove sRegisteelLevelUpLearnset[] = {
-    LEVEL_UP_MOVE( 1, MOVE_EXPLOSION),
     LEVEL_UP_MOVE( 1, MOVE_STOMP),
     LEVEL_UP_MOVE( 1, MOVE_METAL_CLAW),
     //LEVEL_UP_MOVE( 1, MOVE_CHARGE_BEAM),
