@@ -582,7 +582,7 @@ def update_starters_in_file(pokemon_list, file_path):
         print(f"Error sampling {num_starters_to_choose} unique items from a list of size {len(pokemon_list)}.")
         return
 
-    formatted_starters = [f"SPECIES_{name.upper()}" for name in chosen_pokemon]
+    formatted_starters = [f"{name.upper()}" for name in chosen_pokemon]
     new_array_content = ",\n    ".join(formatted_starters)
     new_array_content = f"    {new_array_content},\n"
 
@@ -610,7 +610,7 @@ def update_starters_in_file(pokemon_list, file_path):
     try:
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(modified_content)
-        print(f"Successfully updated starters in '{file_path}' to: {', '.join(chosen_pokemon)}")
+        print(f"Successfully updated starters")
     except Exception as e:
         print(f"Error writing updated content to file '{file_path}': {e}")
 
