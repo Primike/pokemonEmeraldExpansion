@@ -8,8 +8,8 @@
 
 #if P_UPDATED_STATS >= GEN_6
     #define PIKACHU_BASE_DEFENSES\
-        .baseDefense   = 40,     \
-        .baseSpDefense = 50
+        .baseDefense   = 30,     \
+        .baseSpDefense = 40
 #else
     #define PIKACHU_BASE_DEFENSES\
         .baseDefense   = 30,     \
@@ -35,7 +35,7 @@
         .growthRate = GROWTH_MEDIUM_FAST,                                  \
         .eggGroup1 = EGG_GROUP_FIELD,                                      \
         .eggGroup2 = EGG_GROUP_FAIRY,                                      \
-        .abilities = {ABILITY_STATIC, ABILITY_NONE, ABILITY_LIGHTNING_ROD},\
+        .abilities = {ABILITY_STATIC, ABILITY_STATIC},\
         .bodyColor = BODY_COLOR_YELLOW,                                    \
         .noFlip = flip,                                                    \
     }
@@ -62,7 +62,7 @@
         .growthRate = GROWTH_MEDIUM_FAST,                                  \
         .eggGroup1 = EGG_GROUP_UNDISCOVERED,                               \
         .eggGroup2 = EGG_GROUP_UNDISCOVERED,                               \
-        .abilities = {ABILITY_STATIC, ABILITY_NONE, ABILITY_LIGHTNING_ROD},\
+        .abilities = {ABILITY_STATIC, ABILITY_STATIC},\
         .bodyColor = BODY_COLOR_YELLOW,                                    \
         .noFlip = flip,                                                    \
     }
@@ -87,7 +87,7 @@
         .growthRate = GROWTH_MEDIUM_FAST,             \
         .eggGroup1 = EGG_GROUP_UNDISCOVERED,          \
         .eggGroup2 = EGG_GROUP_UNDISCOVERED,          \
-        .abilities = {ABILITY_LEVITATE, ABILITY_NONE},\
+        .abilities = {ABILITY_LEVITATE, ABILITY_LEVITATE},\
         .bodyColor = BODY_COLOR_BLACK,                \
         .noFlip = flip,                               \
     }
@@ -113,7 +113,7 @@
         .growthRate = GROWTH_MEDIUM_FAST,             \
         .eggGroup1 = EGG_GROUP_FAIRY,                 \
         .eggGroup2 = EGG_GROUP_AMORPHOUS,             \
-        .abilities = {ABILITY_FORECAST, ABILITY_NONE},\
+        .abilities = {ABILITY_FORECAST, ABILITY_FORECAST},\
         .bodyColor = color,                           \
         .noFlip = FALSE,                              \
     }
@@ -235,7 +235,7 @@
         .growthRate = GROWTH_MEDIUM_FAST,             \
         .eggGroup1 = EGG_GROUP_AMORPHOUS,             \
         .eggGroup2 = EGG_GROUP_AMORPHOUS,             \
-        .abilities = {ABILITY_LEVITATE, ABILITY_NONE},\
+        .abilities = {ABILITY_LEVITATE, ABILITY_LEVITATE},\
         .bodyColor = BODY_COLOR_RED,                  \
         .noFlip = flip,                               \
     }
@@ -1189,7 +1189,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 70,
         .baseSpDefense = 80,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpAttack  = 90,
+            .baseSpAttack  = 80,
         #else
             .baseSpAttack  = 80,
         #endif
@@ -1267,7 +1267,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 45,
         .baseSpDefense = 80,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 90,
+            .baseAttack    = 80,
         #else
             .baseAttack    = 80,
         #endif
@@ -1345,7 +1345,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 70,
         .baseSpDefense = 70,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpeed     = 101,
+            .baseSpeed     = 91,
         #else
             .baseSpeed     = 91,
         #endif
@@ -1525,7 +1525,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 90,
         .baseSpDefense = 80,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpeed     = 110,
+            .baseSpeed     = 100,
         #else
             .baseSpeed     = 100,
         #endif
@@ -1655,7 +1655,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 75,
         .baseSpDefense = 85,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 92,
+            .baseAttack    = 82,
         #else
             .baseAttack    = 82,
         #endif
@@ -1731,7 +1731,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 85,
         .baseSpDefense = 75,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 102,
+            .baseAttack    = 92,
         #else
             .baseAttack    = 92,
         #endif
@@ -1760,8 +1760,8 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 60,
         .baseSpDefense = 65,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
-            .type2 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -1789,13 +1789,13 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 60,
         .baseSpDefense = 90,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpAttack  = 95,
+            .baseSpAttack  = 85,
         #else
             .baseSpAttack  = 85,
         #endif
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
-            .type2 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -1876,7 +1876,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 25,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_NORMAL,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -1904,13 +1904,13 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 45,
         .baseSpDefense = 50,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpAttack  = 85,
+            .baseSpAttack  = 75,
         #else
             .baseSpAttack  = 75,
         #endif
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_NORMAL,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -2040,7 +2040,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 50,
         .baseSpDefense = 90,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpAttack  = 110,
+            .baseSpAttack  = 100,
         #else
             .baseSpAttack  = 100,
         #endif
@@ -2473,7 +2473,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 70,
         .baseSpDefense = 90,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 95,
+            .baseAttack    = 85,
         #else
             .baseAttack    = 85,
         #endif
@@ -2552,7 +2552,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 120,
         .baseSpAttack  = 135,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 95,
+            .baseSpDefense = 85,
         #else
             .baseSpDefense = 85,
         #endif
@@ -2704,7 +2704,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 70,
         .baseSpAttack  = 100,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 70,
+            .baseSpDefense = 60,
         #else
             .baseSpDefense = 60,
         #endif
@@ -2832,7 +2832,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 55,
         .baseSpDefense = 65,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 120,
+            .baseAttack    = 110,
         #else
             .baseAttack    = 110,
         #endif
@@ -4003,7 +4003,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 120,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_PSYCHIC,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_PSYCHIC,
         #else
             .type1 = TYPE_PSYCHIC,
             .type2 = TYPE_PSYCHIC,
@@ -5254,8 +5254,8 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 45,
         .baseSpDefense = 55,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
-            .type2 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -5285,7 +5285,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 20,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_NORMAL,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -5313,8 +5313,8 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 40,
         .baseSpDefense = 65,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
-            .type2 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -5342,7 +5342,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 80,
         .baseSpDefense = 105,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
             .type2 = TYPE_FLYING,
         #else
             .type1 = TYPE_NORMAL,
@@ -5467,7 +5467,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 115,
         .baseSpDefense = 90,
         #if P_UPDATED_STATS >= GEN_6
-            .baseDefense   = 85,
+            .baseDefense   = 75,
         #else
             .baseDefense   = 75,
         #endif
@@ -5495,7 +5495,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 90,
         .baseSpDefense = 100,
         #if P_UPDATED_STATS >= GEN_6
-            .baseDefense   = 95,
+            .baseDefense   = 85,
         #else
             .baseDefense   = 85,
         #endif
@@ -5528,7 +5528,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 50,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_WATER,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_WATER,
         #else
             .type1 = TYPE_WATER,
             .type2 = TYPE_WATER,
@@ -5555,13 +5555,13 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 50,
         .baseSpDefense = 80,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpAttack  = 60,
+            .baseSpAttack  = 50,
         #else
             .baseSpAttack  = 50,
         #endif
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_WATER,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_WATER,
         #else
             .type1 = TYPE_WATER,
             .type2 = TYPE_WATER,
@@ -5685,7 +5685,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 110,
         .baseSpAttack  = 55,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 95,
+            .baseSpDefense = 85,
         #else
             .baseSpDefense = 85,
         #endif
@@ -6153,8 +6153,8 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 40,
         .baseSpDefense = 40,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
-            .type2 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -6182,8 +6182,8 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 60,
         .baseSpDefense = 60,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
-            .type2 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -7630,7 +7630,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 65,
         .baseSpDefense = 50,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpAttack  = 100,
+            .baseSpAttack  = 90,
         #else
             .baseSpAttack  = 90,
         #endif
@@ -7980,7 +7980,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 35,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_PSYCHIC,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_PSYCHIC,
         #else
             .type1 = TYPE_PSYCHIC,
             .type2 = TYPE_PSYCHIC,
@@ -8013,7 +8013,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 55,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_PSYCHIC,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_PSYCHIC,
         #else
             .type1 = TYPE_PSYCHIC,
             .type2 = TYPE_PSYCHIC,
@@ -8046,7 +8046,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 115,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_PSYCHIC,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_PSYCHIC,
         #else
             .type1 = TYPE_PSYCHIC,
             .type2 = TYPE_PSYCHIC,
@@ -8378,7 +8378,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 68,
         .baseSpAttack  = 91,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 73,
+            .baseSpDefense = 63,
         #else
             .baseSpDefense = 63,
         #endif
@@ -8458,7 +8458,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 40,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_NORMAL,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_NORMAL,
         #else
             .type1 = TYPE_NORMAL,
             .type2 = TYPE_NORMAL,
@@ -8593,7 +8593,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 55,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_STEEL,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_STEEL,
         #else
             .type1 = TYPE_STEEL,
             .type2 = TYPE_STEEL,
@@ -10992,7 +10992,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 100,
         .baseSpAttack  = 50,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 60,
+            .baseSpDefense = 50,
         #else
             .baseSpDefense = 50,
         #endif
@@ -11223,7 +11223,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 125,
         .baseSpDefense = 105,
         #if P_UPDATED_STATS >= GEN_6
-            .baseDefense   = 65,
+            .baseDefense   = 55,
         #else
             .baseDefense   = 55,
         #endif
@@ -11923,7 +11923,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpDefense = 90,
         #if P_UPDATED_TYPES >= GEN_6
             .type1 = TYPE_PSYCHIC,
-            .type2 = TYPE_FAIRY,
+            .type2 = TYPE_PSYCHIC,
         #else
             .type1 = TYPE_PSYCHIC,
             .type2 = TYPE_PSYCHIC,
@@ -12658,7 +12658,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 120,
         .baseSpDefense = 115,
         #if P_UPDATED_TYPES >= GEN_6
-            .type1 = TYPE_FAIRY,
+            .type1 = TYPE_NORMAL,
             .type2 = TYPE_FLYING,
         #else
             .type1 = TYPE_NORMAL,
@@ -13657,7 +13657,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 45,
         .baseSpDefense = 90,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 110,
+            .baseAttack    = 100,
         #else
             .baseAttack    = 100,
         #endif
@@ -13973,7 +13973,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 65,
         .baseSpDefense = 55,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 115,
+            .baseAttack    = 105,
         #else
             .baseAttack    = 105,
         #endif
@@ -14103,7 +14103,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 25,
         .baseSpAttack  = 60,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 80,
+            .baseSpDefense = 70,
         #else
             .baseSpDefense = 70,
         #endif
@@ -14379,7 +14379,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpAttack  = 85,
         .baseSpDefense = 75,
         #if P_UPDATED_STATS >= GEN_6
-            .baseAttack    = 95,
+            .baseAttack    = 85,
         #else
             .baseAttack    = 85,
         #endif
@@ -14507,7 +14507,7 @@ const struct BaseStats gBaseStats[] =
         .baseSpeed     = 92,
         .baseSpAttack  = 70,
         #if P_UPDATED_STATS >= GEN_6
-            .baseSpDefense = 80,
+            .baseSpDefense = 70,
         #else
             .baseSpDefense = 70,
         #endif
@@ -24016,7 +24016,7 @@ const struct BaseStats gBaseStats[] =
         .growthRate = GROWTH_SLOW,
         .eggGroup1 = EGG_GROUP_UNDISCOVERED,
         .eggGroup2 = EGG_GROUP_UNDISCOVERED,
-        .abilities = {ABILITY_DELTA_STREAM, ABILITY_DELTA_STREAM},
+        .abilities = {ABILITY_AIR_LOCK, ABILITY_AIR_LOCK},
         .bodyColor = BODY_COLOR_GREEN,
         .noFlip = FALSE,
         .flags = FLAG_LEGENDARY,
@@ -24041,7 +24041,7 @@ const struct BaseStats gBaseStats[] =
         .growthRate = GROWTH_SLOW,
         .eggGroup1 = EGG_GROUP_UNDISCOVERED,
         .eggGroup2 = EGG_GROUP_UNDISCOVERED,
-        .abilities = {ABILITY_PRIMORDIAL_SEA, ABILITY_PRIMORDIAL_SEA},
+        .abilities = {ABILITY_DRIZZLE},
         .bodyColor = BODY_COLOR_BLUE,
         .noFlip = FALSE,
         .flags = FLAG_LEGENDARY,
@@ -24066,7 +24066,7 @@ const struct BaseStats gBaseStats[] =
         .growthRate = GROWTH_SLOW,
         .eggGroup1 = EGG_GROUP_UNDISCOVERED,
         .eggGroup2 = EGG_GROUP_UNDISCOVERED,
-        .abilities = {ABILITY_DESOLATE_LAND, ABILITY_DESOLATE_LAND},
+        .abilities = {ABILITY_DROUGHT},
         .bodyColor = BODY_COLOR_RED,
         .noFlip = FALSE,
         .flags = FLAG_LEGENDARY,
