@@ -368,6 +368,7 @@ static u8 PickWildMonNature(void)
         return GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY) % NUM_NATURES;
     }
 
+    // Primike this is the nature for wild pokemon
     // random nature
     return Random() % NUM_NATURES;
 }
