@@ -115,6 +115,7 @@ static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
     {8, 4},
 };
 
+// Primike
 static const u16 sStarterMon[STARTER_MON_COUNT] =
 {
     SPECIES_TREECKO,
@@ -352,6 +353,7 @@ static const struct SpriteTemplate sSpriteTemplate_StarterCircle =
     .callback = SpriteCB_StarterPokemon
 };
 
+//  Primike
 // .text
 u16 GetStarterPokemon(u16 chosenStarterId)
 {

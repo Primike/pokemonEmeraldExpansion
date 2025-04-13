@@ -44,6 +44,7 @@
 
 #define EGG_GROUPS_PER_MON      2
 
+// Primike
 // Pokemon natures
 #define NATURE_HARDY    0
 #define NATURE_LONELY   1
@@ -277,6 +278,7 @@
 #define MAX_SHEEN       255
 #define MAX_CONDITION   255
 
+// Primike
 #define MAX_PER_STAT_IVS 31
 #define MAX_IV_MASK 31
 #define USE_RANDOM_IVS (MAX_PER_STAT_IVS + 1)

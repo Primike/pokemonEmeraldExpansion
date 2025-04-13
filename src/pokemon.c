@@ -3211,6 +3211,8 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u8 availableIVs[NUM_STATS];
     u8 selectedIvs[LEGENDARY_PERFECT_IV_COUNT];
 
+    // Primike
+
     ZeroBoxMonData(boxMon);
 
     if (hasFixedPersonality)
@@ -3339,6 +3341,8 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         
     }
 
+    // Primike ivs
+    
     if (gBaseStats[species].abilities[1])
     {
         value = personality & 1;
