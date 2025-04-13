@@ -3198,6 +3198,11 @@ void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFix
     SetMonData(mon, MON_DATA_LEVEL, &level);
     mail = MAIL_NONE;
     SetMonData(mon, MON_DATA_MAIL, &mail);
+    
+    // Primike
+    bool32 isEventLegal = TRUE;
+    SetMonData(mon, MON_DATA_EVENT_LEGAL, &isEventLegal);
+
     CalculateMonStats(mon);
 }
 
@@ -3342,7 +3347,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     }
 
     // Primike ivs
-    
+
     if (gBaseStats[species].abilities[1])
     {
         value = personality & 1;
@@ -3352,6 +3357,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     GiveBoxMonInitialMoveset(boxMon);
 }
 
+// Primike: Creator of wild
 void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)
 {
     u32 personality;
