@@ -502,217 +502,131 @@ import traceback
 from collections import Counter
 
 
-# # --- Configuration ---
-# # Relative path to the JSON file from the script's directory
-# relative_path = "src/data/wild_encounters.json"
-# # Get the absolute path to the JSON file
-# script_dir = os.path.dirname(__file__)  # Get the directory where the script is located
-# json_file_path = os.path.join(script_dir, relative_path)
+# --- Configuration ---
+# Relative path to the JSON file from the script's directory
+relative_path = "src/data/wild_encounters.json"
+# Get the absolute path to the JSON file
+script_dir = os.path.dirname(__file__)  # Get the directory where the script is located
+json_file_path = os.path.join(script_dir, relative_path)
 
-# # --- Main Logic ---
-# try:
-#     # Load the JSON data from the file
-#     with open(json_file_path, 'r') as f:
-#         data = json.load(f)
-#     print(f"Successfully loaded '{json_file_path}'")
+# --- Main Logic ---
+try:
+    # Load the JSON data from the file
+    with open(json_file_path, 'r') as f:
+        data = json.load(f)
+    print(f"Successfully loaded '{json_file_path}'")
 
-#     modified_count = 0
-#     # Define the keys for different encounter types that contain 'mons' lists
-#     encounter_types = ["land_mons", "water_mons", "rock_smash_mons", "fishing_mons"]
+    modified_count = 0
+    # Define the keys for different encounter types that contain 'mons' lists
+    encounter_types = ["land_mons", "water_mons", "rock_smash_mons", "fishing_mons"]
 
-#     # Navigate through the structure to find the species entries
-#     # Assumes the structure is consistent with the example provided
-#     if "wild_encounter_groups" in data and len(data["wild_encounter_groups"]) > 0:
-#         encounter_group = data["wild_encounter_groups"][0] # Assuming modifications are needed in the first group
-#         if "encounters" in encounter_group:
-#             for encounter in encounter_group["encounters"]:
-#                 for encounter_type in encounter_types:
-#                     # Check if the encounter type exists for this map and has a 'mons' list
-#                     if encounter_type in encounter and "mons" in encounter[encounter_type] and isinstance(encounter[encounter_type]["mons"], list):
-#                         for mon in encounter[encounter_type]["mons"]:
-#                             # Check if the 'species' key exists
-#                             if "species" in mon:
-#                                 # Replace the species with a random one from the list
-#                                 original_species = mon["species"]
-#                                 mon["species"] = random.choice(pokemon_species_list)
-#                                 # Optional: Print which species was changed
-#                                 # print(f"  Replaced {original_species} with {mon['species']}")
-#                                 modified_count += 1
+    # Navigate through the structure to find the species entries
+    # Assumes the structure is consistent with the example provided
+    if "wild_encounter_groups" in data and len(data["wild_encounter_groups"]) > 0:
+        encounter_group = data["wild_encounter_groups"][0] # Assuming modifications are needed in the first group
+        if "encounters" in encounter_group:
+            for encounter in encounter_group["encounters"]:
+                for encounter_type in encounter_types:
+                    # Check if the encounter type exists for this map and has a 'mons' list
+                    if encounter_type in encounter and "mons" in encounter[encounter_type] and isinstance(encounter[encounter_type]["mons"], list):
+                        for mon in encounter[encounter_type]["mons"]:
+                            # Check if the 'species' key exists
+                            if "species" in mon:
+                                # Replace the species with a random one from the list
+                                original_species = mon["species"]
+                                mon["species"] = random.choice(pokemon_species_list)
+                                # Optional: Print which species was changed
+                                # print(f"  Replaced {original_species} with {mon['species']}")
+                                modified_count += 1
 
-#     # Save the modified data back to the original file
-#     with open(json_file_path, 'w') as f:
-#         # Use indent for pretty printing, making the file readable
-#         json.dump(data, f, indent=2) # Use indent=4 if you prefer 4 spaces
+    # Save the modified data back to the original file
+    with open(json_file_path, 'w') as f:
+        # Use indent for pretty printing, making the file readable
+        json.dump(data, f, indent=2) # Use indent=4 if you prefer 4 spaces
 
-#     print(f"Successfully modified and saved '{json_file_path}'.")
-#     print(f"Total species entries randomized: {modified_count}")
+    print(f"Successfully modified and saved '{json_file_path}'.")
+    print(f"Total species entries randomized: {modified_count}")
 
-# except FileNotFoundError:
-#     print(f"Error: The file '{json_file_path}' was not found.")
-#     print("Please ensure the script is in the correct directory relative to 'src/data/'.")
-# except json.JSONDecodeError:
-#     print(f"Error: Could not decode JSON from '{json_file_path}'. Check if the file is valid JSON.")
-# except KeyError as e:
-#     print(f"Error: Missing expected key {e} in the JSON structure. Check the JSON format.")
-# except Exception as e:
-#     print(f"An unexpected error occurred: {e}")
-
-
-# def update_starters_in_file(pokemon_list, file_path):
-#     num_starters_to_choose = 3
-
-#     if not os.path.exists(file_path):
-#         print(f"Error: File not found at '{file_path}'")
-#         return
-
-#     if len(pokemon_list) < num_starters_to_choose:
-#         print(f"Error: Need at least {num_starters_to_choose} Pokémon in list, have {len(pokemon_list)}")
-#         return
-
-#     try:
-#         chosen_pokemon = random.sample(pokemon_list, num_starters_to_choose)
-#     except ValueError:
-#         print(f"Error sampling {num_starters_to_choose} unique items from a list of size {len(pokemon_list)}.")
-#         return
-
-#     formatted_starters = [f"{name.upper()}" for name in chosen_pokemon]
-#     new_array_content = ",\n    ".join(formatted_starters)
-#     new_array_content = f"    {new_array_content},\n"
-
-#     try:
-#         with open(file_path, 'r', encoding='utf-8') as f:
-#             original_content = f.read()
-#     except Exception as e:
-#         print(f"Error reading file '{file_path}': {e}")
-#         return
-
-#     pattern = re.compile(
-#         r'(static\s+const\s+u16\s+sStarterMon\[STARTER_MON_COUNT\]\s*=\s*)'
-#         r'{\s*.*?\s*};',
-#         re.DOTALL
-#     )
-
-#     replacement_string = r'\1' + f"{{\n{new_array_content}}};"
-
-#     modified_content, num_replacements = pattern.subn(replacement_string, original_content, count=1)
-
-#     if num_replacements == 0:
-#         print(f"Error: Could not find the sStarterMon array definition in '{file_path}'. Check the file content and structure.")
-#         return
-
-#     try:
-#         with open(file_path, 'w', encoding='utf-8') as f:
-#             f.write(modified_content)
-#         print(f"Successfully updated starters")
-#     except Exception as e:
-#         print(f"Error writing updated content to file '{file_path}': {e}")
+except FileNotFoundError:
+    print(f"Error: The file '{json_file_path}' was not found.")
+    print("Please ensure the script is in the correct directory relative to 'src/data/'.")
+except json.JSONDecodeError:
+    print(f"Error: Could not decode JSON from '{json_file_path}'. Check if the file is valid JSON.")
+except KeyError as e:
+    print(f"Error: Missing expected key {e} in the JSON structure. Check the JSON format.")
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
 
 
-# c_file_target = "src/starter_choose.c"
+def update_starters_in_file(pokemon_list, file_path):
+    num_starters_to_choose = 3
 
-# update_starters_in_file(pokemon_species_list, c_file_target)
+    if not os.path.exists(file_path):
+        print(f"Error: File not found at '{file_path}'")
+        return
 
+    if len(pokemon_list) < num_starters_to_choose:
+        print(f"Error: Need at least {num_starters_to_choose} Pokémon in list, have {len(pokemon_list)}")
+        return
 
-# file_path = "data/maps/RustboroCity_DevonCorp_2F/scripts.inc"
-# species_to_exclude = ["SPECIES_NONE", "SPECIES_EGG"]
+    try:
+        chosen_pokemon = random.sample(pokemon_list, num_starters_to_choose)
+    except ValueError:
+        print(f"Error sampling {num_starters_to_choose} unique items from a list of size {len(pokemon_list)}.")
+        return
 
-# if not pokemon_species_list:
-#     print("Error: pokemon_species_list is empty. Cannot provide replacements.")
-#     exit()
-# if len(pokemon_species_list) < 2:
-#     print("Error: pokemon_species_list needs at least 2 species for replacement.")
-#     exit()
+    formatted_starters = [f"{name.upper()}" for name in chosen_pokemon]
+    new_array_content = ",\n    ".join(formatted_starters)
+    new_array_content = f"    {new_array_content},\n"
 
-# try:
-#     print(f"Reading file: {file_path}")
-#     if not os.path.exists(file_path):
-#         print(f"Error: The file '{file_path}' was not found.")
-#         exit()
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            original_content = f.read()
+    except Exception as e:
+        print(f"Error reading file '{file_path}': {e}")
+        return
 
-#     with open(file_path, 'r', encoding='utf-8') as f_in:
-#         original_content = f_in.read()
+    pattern = re.compile(
+        r'(static\s+const\s+u16\s+sStarterMon\[STARTER_MON_COUNT\]\s*=\s*)'
+        r'{\s*.*?\s*};',
+        re.DOTALL
+    )
 
-#     species_regex = re.compile(r'SPECIES_[A-Z0-9_]+')
-#     found_species = species_regex.findall(original_content)
+    replacement_string = r'\1' + f"{{\n{new_array_content}}};"
 
-#     valid_found_species = [s for s in found_species if s not in species_to_exclude]
+    modified_content, num_replacements = pattern.subn(replacement_string, original_content, count=1)
 
-#     if not valid_found_species:
-#         print("No valid 'SPECIES_*' constants found in the file to replace (excluding ignored ones).")
-#         exit()
+    if num_replacements == 0:
+        print(f"Error: Could not find the sStarterMon array definition in '{file_path}'. Check the file content and structure.")
+        return
 
-#     species_counts = Counter(valid_found_species)
-
-#     top_two = species_counts.most_common(2)
-
-#     if len(top_two) < 2:
-#         print(f"Found only {len(top_two)} distinct species eligible for replacement:")
-#         for species, count in top_two:
-#              print(f" - {species} ({count} occurrences)")
-#         print("Need at least two distinct species to perform the swap. Exiting.")
-#         exit()
-
-#     species_to_replace = [item[0] for item in top_two] # Get the names
-#     print("\nIdentified the two most frequent species to replace:")
-#     print(f" 1. {top_two[0][0]} ({top_two[0][1]} occurrences)")
-#     print(f" 2. {top_two[1][0]} ({top_two[1][1]} occurrences)")
-
-#     replacement_map = {}
-#     available_replacements = [s for s in pokemon_species_list if s not in species_to_replace]
-
-#     if len(available_replacements) < 2:
-#          print("\nError: Not enough unique species in pokemon_species_list to replace the targets.")
-#          exit()
-
-#     new_species1 = random.choice(available_replacements)
-#     replacement_map[species_to_replace[0]] = new_species1
-#     available_replacements.remove(new_species1)
-
-#     new_species2 = random.choice(available_replacements)
-#     replacement_map[species_to_replace[1]] = new_species2
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(modified_content)
+        print(f"Successfully updated starters")
+    except Exception as e:
+        print(f"Error writing updated content to file '{file_path}': {e}")
 
 
-#     modified_content = original_content
-#     total_replacements_made = 0
+c_file_target = "src/starter_choose.c"
 
-#     for original, replacement in replacement_map.items():
-#         count_before = modified_content.count(original)
-#         if count_before > 0:
-#             modified_content = modified_content.replace(original, replacement)
-#             total_replacements_made += count_before
+update_starters_in_file(pokemon_species_list, c_file_target)
 
 
-#     if total_replacements_made > 0:
-#         print(f"\nWriting modified content directly back to: {file_path}")
-#         with open(file_path, 'w', encoding='utf-8') as f_out:
-#             f_out.write(modified_content)
-
-#         print("-" * 30)
-#         print(f"Total individual replacements made: {total_replacements_made}")
-#         print("-" * 30)
-#     else:
-#         # This case should theoretically not be reached if top_two had items
-#         print("\nAn unexpected state occurred: No replacements were made despite finding targets.")
-
-
-# except FileNotFoundError:
-#     print(f"Error: The file '{file_path}' was not found during processing.")
-# except Exception as e:
-#     print(f"\nAn unexpected error occurred: {e}")
-#     print("Modification may be incomplete. Check the file and your Git status.")
-
-
-file_path = "data/maps/Route119_WeatherInstitute_2F/scripts.inc"
+file_path = "data/maps/RustboroCity_DevonCorp_2F/scripts.inc"
 species_to_exclude = ["SPECIES_NONE", "SPECIES_EGG"]
 
 if not pokemon_species_list:
-    print("Error: pokemon_species_list is empty.")
+    print("Error: pokemon_species_list is empty. Cannot provide replacements.")
+    exit()
+if len(pokemon_species_list) < 2:
+    print("Error: pokemon_species_list needs at least 2 species for replacement.")
     exit()
 
 try:
     print(f"Reading file: {file_path}")
     if not os.path.exists(file_path):
-        print(f"Error: File not found: {file_path}")
+        print(f"Error: The file '{file_path}' was not found.")
         exit()
 
     with open(file_path, 'r', encoding='utf-8') as f_in:
@@ -720,48 +634,136 @@ try:
 
     species_regex = re.compile(r'SPECIES_[A-Z0-9_]+')
     found_species = species_regex.findall(original_content)
+
     valid_found_species = [s for s in found_species if s not in species_to_exclude]
 
-    unique_species = set(valid_found_species)
-    original_species = None
-
-    if len(unique_species) == 1:
-        original_species = unique_species.pop() # Get the single item
-        print(f"Found target species: {original_species}")
-    elif len(unique_species) == 0:
-        print("No valid SPECIES_* constant found in the file to replace.")
-        exit()
-    else:
-        print(f"Error: Expected only one distinct species, but found {len(unique_species)}:")
-        for s in unique_species:
-            print(f" - {s}")
+    if not valid_found_species:
+        print("No valid 'SPECIES_*' constants found in the file to replace (excluding ignored ones).")
         exit()
 
-    available_replacements = [s for s in pokemon_species_list if s != original_species]
+    species_counts = Counter(valid_found_species)
 
-    if not available_replacements:
-         print(f"\nError: No species available in pokemon_species_list to replace {original_species}.")
+    top_two = species_counts.most_common(2)
+
+    if len(top_two) < 2:
+        print(f"Found only {len(top_two)} distinct species eligible for replacement:")
+        for species, count in top_two:
+             print(f" - {species} ({count} occurrences)")
+        print("Need at least two distinct species to perform the swap. Exiting.")
+        exit()
+
+    species_to_replace = [item[0] for item in top_two] # Get the names
+    print("\nIdentified the two most frequent species to replace:")
+    print(f" 1. {top_two[0][0]} ({top_two[0][1]} occurrences)")
+    print(f" 2. {top_two[1][0]} ({top_two[1][1]} occurrences)")
+
+    replacement_map = {}
+    available_replacements = [s for s in pokemon_species_list if s not in species_to_replace]
+
+    if len(available_replacements) < 2:
+         print("\nError: Not enough unique species in pokemon_species_list to replace the targets.")
          exit()
 
-    new_species = random.choice(available_replacements)
+    new_species1 = random.choice(available_replacements)
+    replacement_map[species_to_replace[0]] = new_species1
+    available_replacements.remove(new_species1)
 
-    count_before = original_content.count(original_species)
-    modified_content = original_content.replace(original_species, new_species)
+    new_species2 = random.choice(available_replacements)
+    replacement_map[species_to_replace[1]] = new_species2
 
-    if modified_content != original_content:
-        print(f"Writing modified content back to: {file_path}")
+
+    modified_content = original_content
+    total_replacements_made = 0
+
+    for original, replacement in replacement_map.items():
+        count_before = modified_content.count(original)
+        if count_before > 0:
+            modified_content = modified_content.replace(original, replacement)
+            total_replacements_made += count_before
+
+
+    if total_replacements_made > 0:
+        print(f"\nWriting modified content directly back to: {file_path}")
         with open(file_path, 'w', encoding='utf-8') as f_out:
             f_out.write(modified_content)
 
         print("-" * 30)
-        print(f"Successfully modified {file_path}.")
-        print(f"Replaced {count_before} instance(s).")
+        print(f"Total individual replacements made: {total_replacements_made}")
         print("-" * 30)
     else:
-        print("Content unchanged. No replacements needed or species not found correctly.")
+        # This case should theoretically not be reached if top_two had items
+        print("\nAn unexpected state occurred: No replacements were made despite finding targets.")
+
 
 except FileNotFoundError:
-    print(f"Error: File not found during processing: {file_path}")
+    print(f"Error: The file '{file_path}' was not found during processing.")
 except Exception as e:
     print(f"\nAn unexpected error occurred: {e}")
     print("Modification may be incomplete. Check the file and your Git status.")
+
+
+filez = ["data/maps/Route119_WeatherInstitute_2F/scripts.inc", "data/maps/SkyPillar_Top/scripts.inc"]
+
+for file_path in filez:
+    species_to_exclude = ["SPECIES_NONE", "SPECIES_EGG"]
+
+    if not pokemon_species_list:
+        print("Error: pokemon_species_list is empty.")
+        exit()
+
+    try:
+        print(f"Reading file: {file_path}")
+        if not os.path.exists(file_path):
+            print(f"Error: File not found: {file_path}")
+            exit()
+
+        with open(file_path, 'r', encoding='utf-8') as f_in:
+            original_content = f_in.read()
+
+        species_regex = re.compile(r'SPECIES_[A-Z0-9_]+')
+        found_species = species_regex.findall(original_content)
+        valid_found_species = [s for s in found_species if s not in species_to_exclude]
+
+        unique_species = set(valid_found_species)
+        original_species = None
+
+        if len(unique_species) == 1:
+            original_species = unique_species.pop() # Get the single item
+            print(f"Found target species: {original_species}")
+        elif len(unique_species) == 0:
+            print("No valid SPECIES_* constant found in the file to replace.")
+            exit()
+        else:
+            print(f"Error: Expected only one distinct species, but found {len(unique_species)}:")
+            for s in unique_species:
+                print(f" - {s}")
+            exit()
+
+        available_replacements = [s for s in pokemon_species_list if s != original_species]
+
+        if not available_replacements:
+            print(f"\nError: No species available in pokemon_species_list to replace {original_species}.")
+            exit()
+
+        new_species = random.choice(available_replacements)
+
+        count_before = original_content.count(original_species)
+        modified_content = original_content.replace(original_species, new_species)
+
+        if modified_content != original_content:
+            print(f"Writing modified content back to: {file_path}")
+            with open(file_path, 'w', encoding='utf-8') as f_out:
+                f_out.write(modified_content)
+
+            print("-" * 30)
+            print(f"Successfully modified {file_path}.")
+            print(f"Replaced {count_before} instance(s).")
+            print("-" * 30)
+        else:
+            print("Content unchanged. No replacements needed or species not found correctly.")
+
+    except FileNotFoundError:
+        print(f"Error: File not found during processing: {file_path}")
+    except Exception as e:
+        print(f"\nAn unexpected error occurred: {e}")
+        print("Modification may be incomplete. Check the file and your Git status.")
