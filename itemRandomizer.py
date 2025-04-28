@@ -248,13 +248,18 @@ tm_items = [
     "ITEM_TM50"
 ]
 
-import random
-import re
 import os
+import json
+import random
+import logging
+import re
 
 # --- Configuration ---
+ROOT_DIR = 'data/maps'
+JSON_FILENAME = 'map.json'
 file_path = "data/scripts/item_ball_scripts.inc"
-# No backup file path needed
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # --- Sanity Checks ---
 if not tm_items:
@@ -264,66 +269,113 @@ if not all_items:
     print("Error: all_items list is empty. Cannot proceed.")
     exit()
 
-# --- Processing Logic ---
-modified_lines = []
-items_replaced = 0
+# --- Processing Logic for item_ball_scripts.inc ---
+def process_item_ball_scripts(file_path):
+    modified_lines = []
+    items_replaced = 0
+    items_not_replaced = []
 
-# Regular expression to find the finditem lines and capture the item name
-# Allows for potential starting whitespace and whitespace around the item
-finditem_regex = re.compile(r"^\s*finditem\s+(ITEM_[A-Z0-9_]+)\s*$")
+    finditem_regex = re.compile(r"^\s*finditem\s+(ITEM_[A-Z0-9_]+)\s*$")
 
-try:
-    # --- Backup step removed as requested ---
-    # No backup is created. File will be modified directly.
-
-    print(f"Reading file: {file_path}")
-    # Check if file exists before trying to read
     if not os.path.exists(file_path):
         print(f"Error: The file '{file_path}' was not found.")
-        print("Please ensure the script is run from the correct directory or update the file_path variable.")
-        exit() # Exit if the file doesn't exist
+        exit()
 
     with open(file_path, 'r', encoding='utf-8') as f_in:
         lines = f_in.readlines()
 
-    print("Processing lines and randomizing items...")
     for line in lines:
-        # Use strip() when matching to handle potential leading/trailing whitespace robustly
         match = finditem_regex.match(line.strip())
-
         if match:
             original_item = match.group(1)
             new_item = None
 
-            # Check if the *original* item was a TM
-            if original_item.startswith("ITEM_TM"):
-                # Choose a random item from the TM list
-                new_item = random.choice(tm_items)
-            else:
-                # Choose a random item from the general item list
-                new_item = random.choice(all_items)
+            if original_item in all_items or original_item in tm_items:
+                if original_item.startswith("ITEM_TM"):
+                    new_item = random.choice(tm_items)
+                else:
+                    new_item = random.choice(all_items)
 
-            # Reconstruct the line, preserving the standard indentation (usually a tab)
-            # If your indentation varies, this might need adjustment
-            modified_line = f"\tfinditem {new_item}\n"
-            modified_lines.append(modified_line)
-            items_replaced += 1
+                if new_item and new_item != original_item:
+                    modified_line = f"\tfinditem {new_item}\n"
+                    modified_lines.append(modified_line)
+                    items_replaced += 1
+                else:
+                    modified_lines.append(line)
+            else:
+                items_not_replaced.append(original_item)
+                modified_lines.append(line)
         else:
-            # Keep lines that don't match the pattern unchanged
             modified_lines.append(line)
 
-    print(f"Writing modified content directly back to: {file_path}")
-    # Overwrite the original file
     with open(file_path, 'w', encoding='utf-8') as f_out:
         f_out.writelines(modified_lines)
 
-    print("-" * 30)
     print(f"Total items replaced: {items_replaced}")
-    print("-" * 30)
+    print(f"Items not replaced ({len(items_not_replaced)}): {items_not_replaced}")
 
-except FileNotFoundError:
-    # This specific error case is handled above, but kept here for broader file issues
-    print(f"Error: The file '{file_path}' was not found during processing.")
-except Exception as e:
-    print(f"An unexpected error occurred: {e}")
-    print("Modification may be incomplete. Check the file and your Git status.")
+# --- Processing Logic for JSON files ---
+def process_json_files(root_directory, filename_to_find):
+    processed_files = 0
+    modified_files = 0
+    items_replaced_count = 0
+    items_not_replaced = []
+
+    for subdir, _, files in os.walk(root_directory):
+        if filename_to_find in files:
+            json_path = os.path.join(subdir, filename_to_find)
+            processed_files += 1
+            file_was_modified = False
+
+            try:
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+
+                if 'bg_events' in data and isinstance(data['bg_events'], list):
+                    for event in data['bg_events']:
+                        if isinstance(event, dict) and event.get('type') == 'hidden_item':
+                            original_item = event.get('item')
+                            if original_item:
+                                new_item = None
+
+                                if original_item in all_items or original_item in tm_items:
+                                    if original_item.startswith("TM") or original_item.startswith("HM"):
+                                        if tm_items:
+                                            new_item = random.choice(tm_items)
+                                    else:
+                                        if all_items:
+                                            new_item = random.choice(all_items)
+
+                                    if new_item and new_item != original_item:
+                                        event['item'] = new_item
+                                        file_was_modified = True
+                                        items_replaced_count += 1
+                                else:
+                                    items_not_replaced.append(original_item)
+
+                if file_was_modified:
+                    with open(json_path, 'w', encoding='utf-8') as f:
+                        json.dump(data, f, indent=4)
+                    modified_files += 1
+
+            except json.JSONDecodeError as e:
+                logging.error(f"Error decoding JSON file {json_path}: {e}")
+            except IOError as e:
+                logging.error(f"Could not read file {json_path}: {e}")
+            except Exception as e:
+                logging.error(f"An unexpected error occurred processing {json_path}: {e}")
+
+    logging.info(f"--- Processing Complete ---")
+    logging.info(f"Total files scanned: {processed_files}")
+    logging.info(f"Total files modified: {modified_files}")
+    logging.info(f"Total items replaced: {items_replaced_count}")
+    logging.info(f"Items not replaced ({len(items_not_replaced)}): {items_not_replaced}")
+
+# --- Run the script ---
+if __name__ == "__main__":
+    if not all_items or not tm_items:
+        print("!!! WARNING: 'all_items' or 'tm_items' lists are empty or incomplete.")
+        exit()
+
+    process_item_ball_scripts(file_path)
+    process_json_files(ROOT_DIR, JSON_FILENAME)
